@@ -11,6 +11,7 @@ public class adminSQLiteOpenHelper  extends SQLiteOpenHelper implements IConstan
         super(context, name, factory, version);
     }
         //cometario git
+        //comentario para diana 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(TBL_PRODUCTO_DLL);
