@@ -10,8 +10,7 @@ public class adminSQLiteOpenHelper  extends SQLiteOpenHelper implements IConstan
     public adminSQLiteOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
-        //cometario git
-        //comentario para diana 
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(TBL_PRODUCTO_DLL);

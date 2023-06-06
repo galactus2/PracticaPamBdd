@@ -2,22 +2,47 @@ package com.example.practicapambdd;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements IConstantes {
+    EditText txtCodigo,txtNombre,txtPrecio,txtCantidad;
+    adminSQLiteOpenHelper admin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        enlazarDatos();
     }
 
     public void enlazarDatos (){
-        Toast.makeText(this, "hola git", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "segundo commit", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "tercer commit", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "cuarto  commit , a diana le gusta los chocolates :V", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "quinto commit , a diana le gusta la torta de chocolate", Toast.LENGTH_SHORT).show();
+
+        txtCodigo=findViewById(R.id.txtCodigo);
+        txtNombre=findViewById(R.id.txtNombre);
+        txtPrecio=findViewById(R.id.txtPrecio);
+        txtCantidad=findViewById(R.id.txtCantidad);
+
+        admin= new adminSQLiteOpenHelper(this,BDD,null,VERSION);
+
+
     }
+
+    public void agregar(View v)
+    {
+        SQLiteDatabase bd=admin.getWritableDatabase();
+        ContentValues registro=new ContentValues();
+        registro.put("nombre",txtNombre.getText().toString());
+        registro.put("precio",Double.parseDouble(txtPrecio.getText().toString()));
+        registro.put("cantidad",Integer.parseInt(txtCantidad.getText().toString()));
+        bd.insert(TBL_PRODUCTO,null,registro);
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtCantidad.setText("");
+
+    }
+
+
 }
