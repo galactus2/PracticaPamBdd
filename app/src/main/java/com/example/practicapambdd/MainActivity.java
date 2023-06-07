@@ -3,10 +3,12 @@ package com.example.practicapambdd;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements IConstantes {
     EditText txtCodigo,txtNombre,txtPrecio,txtCantidad;
@@ -41,7 +43,28 @@ public class MainActivity extends AppCompatActivity implements IConstantes {
         txtNombre.setText("");
         txtPrecio.setText("");
         txtCantidad.setText("");
+        bd.close();
+        Toast.makeText(this, "sel almaceno producto", Toast.LENGTH_SHORT).show();
+    }
 
+    public void consultar(View v)
+    {
+        SQLiteDatabase bd=admin.getWritableDatabase();
+        String codigo=txtCodigo.getText().toString();
+        Cursor fila=bd.rawQuery("select nombre,precio,cantidad from producto where codigo='"+codigo+"'",null);
+        if(fila.moveToFirst())
+        {
+            txtNombre.setText(fila.getString(0));
+            txtPrecio.setText(fila.getString(1));
+            txtCantidad.setText(fila.getString(2));
+
+        }
+        else
+        {
+            Toast.makeText(this, "No existe id", Toast.LENGTH_SHORT).show();
+        }
+
+        bd.close();
     }
 
 
