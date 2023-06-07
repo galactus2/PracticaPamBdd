@@ -62,10 +62,65 @@ public class MainActivity extends AppCompatActivity implements IConstantes {
         else
         {
             Toast.makeText(this, "No existe id", Toast.LENGTH_SHORT).show();
+            txtCodigo.setText("");
+            txtNombre.setText("");
+            txtPrecio.setText("");
+            txtCantidad.setText("");
         }
 
         bd.close();
     }
+
+    public void borrar(View v)
+    {
+        SQLiteDatabase bd=admin.getWritableDatabase();
+        String codigo=txtCodigo.getText().toString();
+        int cant=bd.delete("producto","codigo='"+codigo+"'",null);
+        if(cant==1);
+        {
+            Toast.makeText(this, "se elimino el producto", Toast.LENGTH_SHORT).show();
+            txtCodigo.setText("");
+            txtNombre.setText("");
+            txtPrecio.setText("");
+            txtCantidad.setText("");
+        }
+
+        bd.close();
+    }
+
+
+    public void Modificar(View v)
+    {
+        SQLiteDatabase bd=admin.getWritableDatabase();
+        String codigo=txtCodigo.getText().toString();
+        ContentValues registro= new ContentValues();
+        registro.put("nombre",txtNombre.getText().toString());
+        registro.put("precio",Double.parseDouble(txtPrecio.getText().toString()));
+        registro.put("cantidad",Integer.parseInt(txtCantidad.getText().toString()));
+        int cantidad=bd.update("producto",registro,"codigo='"+codigo+"'",null);
+        if(cantidad==1)
+        {
+            Toast.makeText(this, "Se modifico el producto"+txtNombre.getText().toString(), Toast.LENGTH_SHORT).show();
+
+        }
+        else
+        {
+            Toast.makeText(this, "No existe el producto", Toast.LENGTH_SHORT).show();
+        }
+
+        bd.close();
+
+    }
+
+    public void LimpiarDatos()
+    {
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtCantidad.setText("");
+    }
+
+
 
 
 }
